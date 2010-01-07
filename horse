@@ -27,7 +27,7 @@ module Horse
         print "[1-#{HORSES.size}] "
         number = gets
         begin
-          number = Integer(number) - 1
+          number = Integer(number)-1
         rescue Exception
           puts "Please enter a number."
           puts
@@ -59,7 +59,7 @@ module Horse
         winner = HORSES[rand(HORSES.size)]
       end
       puts
-
+      puts "You bet #{amount} on #{horse}"
       spin
 
       if winner == horse
