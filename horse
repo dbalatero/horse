@@ -1,18 +1,22 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
+require 'enumclause'
 
 class CashhhhhhhError < StandardError; end
+
+
+$enumclause = Enumclause.new
 
 module Horse
   HORSES = YAML.load(File.read('horses.yml'))
   ANNOUNCER = YAML.load(File.read('announcer.yml'))
-  COLORS = { :default => "[39m",
-             :red     => "[31m",
-             :green   => "[32m",
-             :yellow  => "[33m",
-             :magenta => "[35m",
-             :cyan    => "[36m"
+  COLORS = { :default => "\e[39m",
+             :red     => "\e[31m",
+             :green   => "\e[32m",
+             :yellow  => "\e[33m",
+             :magenta => "\e[35m",
+             :cyan    => "\e[36m"
            }
   COLOR_ARRAY = COLORS.values - [COLORS[:default]]
 
@@ -41,8 +45,31 @@ module Horse
       winner = nil
       while winner.nil?
         puts "How much do you want to bet? You have $#{@cash_to_bet} to bet with."
+        puts "Alternatively, type 'pet' to pet the horses."
         print "$"
-        amount = gets
+        amount = gets.strip!
+
+        if amount == 'pet'
+          HORSES.each do |horse|
+            puts "You are #{rand > 0.5 ? 'heavily ' : ''}petting #{horse}"
+            sleep 0.1
+          end
+
+          puts "-------------------------"
+          print COLORS[:green]
+          puts "There was one fucking rule."
+          sleep 2
+          print COLORS[:red]
+          puts $enumclause.the_rule
+          sleep 2
+          puts "Now you lose all your money except $0.01"
+          @cash_to_bet = 0.01
+          puts "You currently have $#{@cash_to_bet}"
+          print COLORS[:default]
+          puts "-------------------------"
+          next
+        end
+
         begin
           amount = Float(amount)
           if amount > @cash_to_bet
@@ -92,12 +119,12 @@ module Horse
         the_hoff_says
       end
       show_cursor
-      print "\e#{COLORS[:default]}"
+      print COLORS[:default]
     end
 
     def loop_print_flush_sleep(n, str)
       n.times do
-        print "\e#{COLOR_ARRAY[rand(COLOR_ARRAY.size)]}"
+        print COLOR_ARRAY[rand(COLOR_ARRAY.size)]
         print str
         STDOUT.flush
         sleep rand / 100 * 3
@@ -115,6 +142,15 @@ module Horse
 end
 
 if __FILE__ == $0
+  puts "HERE'S THE DEAL. WE MADE A FORTUNE FOR YOU:"
+  puts $enumclause.fortune
+  puts "----------------------------"
+  puts "There is one rule:"
+  sleep 1
+  puts $enumclause.the_rule
+  sleep 1
+  puts "Let's start!"
+
   Horse.play while Horse.has_money?
 
   # shiftytyyyyyyyyyyyy
