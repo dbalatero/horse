@@ -1,0 +1,32 @@
+#!/usr/bin/env ruby
+
+horses = %w{ man-o-war seabiscuit citation quickie-in-the-alley uggo eggo
+             waffle-breasts brandt-maxwell-kraushaar horse-chestnut }
+
+horse = nil
+while horse.nil?
+  puts "Which horse would you like to bet on?"
+  horses.each_with_index do |name, index|
+    puts "#{index + 1}. #{name}"
+  end
+  number = gets.to_i - 1
+
+  horse = horses[number]
+end
+
+puts "How much do you want to bet?"
+print "$"
+amount = gets.to_f
+
+winner = horses[rand(horses.size)]
+
+10.times do
+  10.times { print '.'; STDOUT.flush; sleep 0.01 }
+  10.times { print "\b"; STDOUT.flush; sleep 0.01 }
+end
+
+if winner == horse
+  puts "YOU WON #{amount}!!!!!!!!"
+else
+  puts "BITCH YOU LOSTTTTTTTTTTT! THE WINNER WAS #{winner}"
+end
