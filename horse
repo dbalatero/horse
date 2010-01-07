@@ -1,32 +1,93 @@
 #!/usr/bin/env ruby
 
-horses = %w{ man-o-war seabiscuit citation quickie-in-the-alley uggo eggo
-             waffle-breasts brandt-maxwell-kraushaar horse-chestnut }
+module Horse
+  HORSES = YAML.load(File.read('horses.yml'))
+  COLORS = { :default => "[39m",
+             :red     => "[31m",
+             :green   => "[32m",
+             :yellow  => "[33m",
+             :magenta => "[35m",
+             :cyan    => "[36m"
+           }
+  COLOR_ARRAY = COLORS.values - [COLORS[:default]]
 
-horse = nil
-while horse.nil?
-  puts "Which horse would you like to bet on?"
-  horses.each_with_index do |name, index|
-    puts "#{index + 1}. #{name}"
+  class << self
+    def play
+      horse = nil
+      while horse.nil?
+        puts "Which horse would you like to bet on?"
+        HORSES.each_with_index do |name, index|
+          puts "#{index + 1}. #{name}"
+        end
+        print "[1-#{HORSES.size}] "
+        number = gets
+        begin
+          number = Integer(number)
+        rescue Exception
+          puts "Please enter a number."
+          puts
+          redo
+        end
+        horse = HORSES[number]
+      end
+      puts
+
+      winner = nil
+      while winner.nil?
+        puts "How much do you want to bet?"
+        print "$"
+        amount = gets
+        begin
+          amount = Float(amount)
+        rescue Exception
+          puts "Please enter a number."
+          puts
+          redo
+        end
+        winner = HORSES[rand(HORSES.size)]
+      end
+      puts
+
+      spin
+
+      if winner == horse
+        puts "YOU WON #{amount}!!!!!!!!"
+      else
+        puts "BITCH YOU LOSTTTTTTTTTTT! THE WINNER WAS #{winner}"
+      end
+    end
+
+    private
+    def spin
+      hide_cursor
+      10.times do
+        n = rand(11) + 10
+        loop_print_flush_sleep(n, '.')
+        loop_print_flush_sleep(n, "\b \b")
+      end
+      show_cursor
+      print "\e#{COLORS[:default]}"
+    end
+
+    def loop_print_flush_sleep(n, str)
+      n.times do
+        print "\e#{COLOR_ARRAY[rand(COLOR_ARRAY.size)]}"
+        print str
+        STDOUT.flush
+        sleep rand / 100 * 3
+      end
+    end
+
+    def hide_cursor
+      print "\e[?25l"
+    end
+
+    def show_cursor
+      print "\e[?25h"
+    end
   end
-  number = gets.to_i - 1
-
-  horse = horses[number]
 end
 
-puts "How much do you want to bet?"
-print "$"
-amount = gets.to_f
-
-winner = horses[rand(horses.size)]
-
-10.times do
-  10.times { print '.'; STDOUT.flush; sleep 0.01 }
-  10.times { print "\b"; STDOUT.flush; sleep 0.01 }
-end
-
-if winner == horse
-  puts "YOU WON #{amount}!!!!!!!!"
-else
-  puts "BITCH YOU LOSTTTTTTTTTTT! THE WINNER WAS #{winner}"
+if __FILE__ == $0
+  Horse.play
 end
