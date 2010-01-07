@@ -6,6 +6,7 @@ class CashhhhhhhError < StandardError; end
 
 module Horse
   HORSES = YAML.load(File.read('horses.yml'))
+  ANNOUNCER = YAML.load(File.read('announcer.yml'))
   COLORS = { :default => "[39m",
              :red     => "[31m",
              :green   => "[32m",
@@ -78,12 +79,17 @@ module Horse
     end
 
     private
+    def the_hoff_says
+      puts "#{HORSES[rand(HORSES.size)]} #{ANNOUNCER[rand(ANNOUNCER.size)]}"
+    end
+    
     def spin
       hide_cursor
       10.times do
         n = rand(11) + 10
         loop_print_flush_sleep(n, '.')
         loop_print_flush_sleep(n, "\b \b")
+        the_hoff_says
       end
       show_cursor
       print "\e#{COLORS[:default]}"
