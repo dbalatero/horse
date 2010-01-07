@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+require 'yaml'
+
 class CashhhhhhhError < StandardError; end
 
 module Horse
@@ -25,7 +27,7 @@ module Horse
         print "[1-#{HORSES.size}] "
         number = gets
         begin
-          number = Integer(number)
+          number = Integer(number) - 1
         rescue Exception
           puts "Please enter a number."
           puts
