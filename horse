@@ -1,5 +1,7 @@
 #!/usr/bin/env ruby
 
+class CashhhhhhhError < StandardError; end
+
 module Horse
   HORSES = YAML.load(File.read('horses.yml'))
   COLORS = { :default => "[39m",
@@ -11,6 +13,7 @@ module Horse
            }
   COLOR_ARRAY = COLORS.values - [COLORS[:default]]
 
+  @cash_to_bet = rand(1000000000) + (rand(100).to_f / 100.0)
   class << self
     def play
       horse = nil
@@ -34,11 +37,18 @@ module Horse
 
       winner = nil
       while winner.nil?
-        puts "How much do you want to bet?"
+        puts "How much do you want to bet? You have $#{@cash_to_bet} to bet with."
         print "$"
         amount = gets
         begin
           amount = Float(amount)
+          if amount > @cash_to_bet
+            raise CashhhhhhhError
+          end
+        rescue CashhhhhhhError
+          puts "You don't have enough cash to make that bet."
+          puts
+          redo
         rescue Exception
           puts "Please enter a number."
           puts
@@ -51,10 +61,18 @@ module Horse
       spin
 
       if winner == horse
+        @cash_to_bet += amount
         puts "YOU WON #{amount}!!!!!!!!"
       else
+        @cash_to_bet -= amount
         puts "BITCH YOU LOSTTTTTTTTTTT! THE WINNER WAS #{winner}"
       end
+
+      puts "Your cash total: $#{@cash_to_bet}"
+    end
+
+    def has_money?
+      @cash_to_bet > 0.00
     end
 
     private
@@ -89,5 +107,12 @@ module Horse
 end
 
 if __FILE__ == $0
-  Horse.play
+  Horse.play while Horse.has_money?
+
+  # shiftytyyyyyyyyyyyy
+  at_exit {
+    puts "--------------------------------"
+    puts "SON U OUTTA MONEYYYYYYYYYYYYYYYY"
+  }
+  exit
 end
