@@ -71,6 +71,33 @@ module Horse
           next
         end
 
+        if amount == "up up down down left right left right b a"
+          puts "                                ,_.-('--.         "
+          puts "                              .(  '-.'.\'\_,      "
+          puts "                             /  `-.`_;;-./(/=,    "
+          puts "                            |.-.-'.'       .`.\   "
+          puts "                            { .-.'         //,|\\ "
+          puts "                           /-'./   '._    <| \)   "
+          puts "                          { -./      |\    |      "
+          puts "                           {_/       \ |   |      "
+          puts "          .--\"\"\"--..,___,.;'          |(  o/      "
+          puts "        .'                            | `\"`       "
+          puts "       /                             /            "
+          puts "   _.-'|                            `-._          "
+          puts " .' .'/|                              _ `\        "
+          puts "/ .-'|  \       ,          _.-`'-.__.' | /        "
+          puts "|( / |   |     / `'------'`        \ \/ /         "
+          puts " \  ) \  /   /`._                /`-./ /          "
+          puts " |.' / )',  \._  `\              \___ /           "
+          puts " / .'_.;  \  \ `) |               / /`            "
+          puts " '._;.-,)  `\ \/  |            .-' /              "
+          puts "      (      ) |_/             |_.'               "
+          puts "          .-' /                                   "
+          puts "          \_.'                                    "
+          puts "                                                  "
+          next
+        end
+
         begin
           amount = Float(amount)
           if amount > @cash_to_bet
@@ -110,7 +137,7 @@ module Horse
     def the_hoff_says
       puts "#{HORSES[rand(HORSES.size)]} #{ANNOUNCER[rand(ANNOUNCER.size)]}"
     end
-    
+
     def spin
       hide_cursor
       10.times do
