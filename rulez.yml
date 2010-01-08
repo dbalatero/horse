@@ -11,7 +11,7 @@ Don't pet the horses: |
         ::Horse::PettingSong.play
         ::Horse::HORSES.each do |horse|
           puts "You are #{rand > 0.5 ? 'heavily ' : ''}petting #{horse}"
-          sleep 0.1
+          sleep 0.3
         end
 
         puts "-------------------------"
