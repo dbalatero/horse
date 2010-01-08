@@ -1,1 +1,30 @@
-- Don't pet the horses 
+Don't pet the horses: |
+  module ::Horse 
+    module PettingHorses 
+      def self.rule_violation
+        "pet"
+      end
+
+      def self.take_valiant_action!(horse_game)
+        ::Horse::HORSES.each do |horse|
+          puts "You are #{rand > 0.5 ? 'heavily ' : ''}petting #{horse}"
+          sleep 0.1
+        end
+
+        puts "-------------------------"
+        print COLORS[:green]
+        puts "There was one fucking rule."
+        sleep 2
+        print COLORS[:red]
+        puts $enumclause.spit_rule
+        sleep 2
+        puts "Now you lose all your money except $0.01"
+        horse_game.instance_variable_set(:@cash_to_bet, 0.01)
+        puts "You currently have $#{horse_game.instance_variable_get(:@cash_to_bet)}"
+        print COLORS[:default]
+        puts "-------------------------"
+        "next"
+      end
+    end
+  end 
+  Horse::PettingHorses

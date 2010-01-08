@@ -7,7 +7,7 @@ require 'enumclause'
 class CashhhhhhhError < StandardError; end
 
 
-$enumclause = Enumclause.new
+$enumclause = Horse::Enumclause.new
 
 module Horse
   HORSES = YAML.load(File.read('horses.yml'))
@@ -17,8 +17,7 @@ module Horse
              :green   => "\e[32m",
              :yellow  => "\e[33m",
              :magenta => "\e[35m",
-             :cyan    => "\e[36m"
-           }
+             :cyan    => "\e[36m" }
   COLOR_ARRAY = COLORS.values - [COLORS[:default]]
 
   @cash_to_bet = rand(1000000000) + (rand(100).to_f / 100.0)
@@ -50,25 +49,9 @@ module Horse
         print "$"
         amount = gets.strip!
 
-        if amount == 'pet'
-          HORSES.each do |horse|
-            puts "You are #{rand > 0.5 ? 'heavily ' : ''}petting #{horse}"
-            sleep 0.1
-          end
-
-          puts "-------------------------"
-          print COLORS[:green]
-          puts "There was one fucking rule."
-          sleep 2
-          print COLORS[:red]
-          puts $enumclause.the_rule
-          sleep 2
-          puts "Now you lose all your money except $0.01"
-          @cash_to_bet = 0.01
-          puts "You currently have $#{@cash_to_bet}"
-          print COLORS[:default]
-          puts "-------------------------"
-          next
+        if amount == $enumclause.rule_violation
+          action = $enumclause.take_valiant_action!(self)
+          eval(action)
         end
 
         if amount == "up up down down left right left right b a"
@@ -175,7 +158,7 @@ if __FILE__ == $0
   puts "----------------------------"
   puts "There is one rule:"
   sleep 1
-  puts $enumclause.the_rule
+  puts $enumclause.spit_rule
   sleep 1
   puts "Let's start!"
 
