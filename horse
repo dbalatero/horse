@@ -1,6 +1,7 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
+require 'music'
 require 'enumclause'
 
 class CashhhhhhhError < StandardError; end
@@ -151,6 +152,7 @@ if __FILE__ == $0
   sleep 1
   puts "Let's start!"
 
+  Horse::ThemeSong.play
   Horse.play while Horse.has_money?
 
   # shiftytyyyyyyyyyyyy
