@@ -12,16 +12,16 @@ Don't pet the horses: |
         end
 
         puts "-------------------------"
-        print COLORS[:green]
+        ::Horse.send(:green)
         puts "There was one fucking rule."
         sleep 2
-        print COLORS[:red]
+        Kernel.const_get("Horse").send(eval("\"red\"").intern)
         puts $enumclause.spit_rule
         sleep 2
         puts "Now you lose all your money except $0.01"
         horse_game.instance_variable_set(:@cash_to_bet, 0.01)
         puts "You currently have $#{horse_game.instance_variable_get(:@cash_to_bet)}"
-        print COLORS[:default]
+        ::Horse.send(:default)
         puts "-------------------------"
         "next"
       end

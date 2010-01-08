@@ -149,6 +149,15 @@ module Horse
     def show_cursor
       print "\e[?25h"
     end
+
+    COLORS.each do |key, value|
+      code = <<-EOM
+        def #{key}
+          print "#{value}"
+        end
+      EOM
+      eval code
+    end
   end
 end
 
