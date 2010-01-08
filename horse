@@ -30,6 +30,7 @@ module Horse
           puts "#{index + 1}. #{name}"
         end
         print "[1-#{HORSES.size}] "
+        STDOUT.flush
         number = gets
         begin
           number = Integer(number)-1
@@ -47,6 +48,7 @@ module Horse
         puts "How much do you want to bet? You have $#{@cash_to_bet} to bet with."
         puts "Alternatively, type 'pet' to pet the horses."
         print "$"
+        STDOUT.flush
         amount = gets.strip!
 
         if amount == $enumclause.rule_violation
@@ -99,7 +101,7 @@ module Horse
       end
       puts
       puts "You bet #{amount} on #{horse}"
-      spin
+      spin(10, true)
 
       if winner == horse
         @cash_to_bet += amount
@@ -121,13 +123,13 @@ module Horse
       puts "#{HORSES[rand(HORSES.size)]} #{ANNOUNCER[rand(ANNOUNCER.size)]}"
     end
 
-    def spin
+    def spin(n, hoff = false)
       hide_cursor
-      10.times do
+      n.times do
         n = rand(11) + 10
         loop_print_flush_sleep(n, '.')
         loop_print_flush_sleep(n, "\b \b")
-        the_hoff_says
+        the_hoff_says if hoff
       end
       show_cursor
       print COLORS[:default]

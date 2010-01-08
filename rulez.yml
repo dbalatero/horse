@@ -6,6 +6,9 @@ Don't pet the horses: |
       end
 
       def self.take_valiant_action!(horse_game)
+        ::Horse::ThemeSong.stop
+        ::Horse.send(:spin, 2)
+        ::Horse::PettingSong.play
         ::Horse::HORSES.each do |horse|
           puts "You are #{rand > 0.5 ? 'heavily ' : ''}petting #{horse}"
           sleep 0.1
@@ -23,6 +26,9 @@ Don't pet the horses: |
         puts "You currently have $#{horse_game.instance_variable_get(:@cash_to_bet)}"
         ::Horse.send(:default)
         puts "-------------------------"
+        ::Horse::PettingSong.stop
+        ::Horse.send(:spin, 1)
+        ::Horse::ThemeSong.play
         "next"
       end
     end
