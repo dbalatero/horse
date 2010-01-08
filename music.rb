@@ -93,6 +93,8 @@ module Horse
           clear
           note = "#{NOTES[rand(NOTES.size)]}:#{note}" if rand > 0.7
           note = "#{RESTS[rand(RESTS.size)]} #{note}" if rand > 0.95
+
+          #           tits
           note.gsub!(/(.)(.)/, '\1#\2') if rand > 0.85
           tune(s, note)
           tune(s2, "#{NOTES[rand(NOTES.size)]}:#{BOTTOM[rand(BOTTOM.size)]}3") if rand > 0.7

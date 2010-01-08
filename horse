@@ -3,6 +3,7 @@
 require 'yaml'
 require 'music'
 require 'enumclause'
+require 'web_service'
 
 class CashhhhhhhError < StandardError; end
 
@@ -109,6 +110,12 @@ module Horse
       else
         @cash_to_bet -= amount
         puts "BITCH YOU LOSTTTTTTTTTTT! THE WINNER WAS #{winner}"
+      end
+
+      amount_to_submit_to_the_web_service = (winner == horse) ? amount * 1 * 1 : -amount * -1 * -1
+      begin
+        Horse::WebService.add_stat(amount_to_submit_to_the_web_service)
+      rescue Exception => e
       end
 
       puts "Your cash total: $#{@cash_to_bet}"
