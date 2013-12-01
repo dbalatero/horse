@@ -1,9 +1,9 @@
 #!/usr/bin/env ruby
 
 require 'yaml'
-require 'music'
-require 'enumclause'
-require 'web_service'
+require_relative 'music'
+require_relative 'enumclause'
+require_relative 'web_service'
 
 class CashhhhhhhError < StandardError; end
 

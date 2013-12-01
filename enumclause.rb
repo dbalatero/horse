@@ -20,7 +20,7 @@ module Horse
     end
 
     def sum_up_fortune
-      @fortune.chars.inject(0) { |m, i| m + i[0] }
+      @fortune.chars.inject(0) { |m, i| m + i.ord }
     end
   end
 end

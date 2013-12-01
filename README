@@ -1,5 +1,5 @@
 hey fuckers do this shit:
 -------------------------
-port install portaudio
-port install fortune
-gem install bloopsaphone
+brew install portaudio
+brew install fortune
+bundle install
