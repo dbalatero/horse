@@ -29,7 +29,6 @@ Don't pet the horses: |
         ::Horse::PettingSong.stop
         ::Horse.send(:spin, 1)
         ::Horse::ThemeSong.play
-        "next"
       end
     end
   end 

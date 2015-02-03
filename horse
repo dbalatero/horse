@@ -53,8 +53,8 @@ module Horse
         amount = gets.strip!
 
         if amount == $enumclause.rule_violation
-          action = $enumclause.take_valiant_action!(self)
-          eval(action)
+          $enumclause.take_valiant_action!(self)
+          next
         end
 
         if amount == "up up down down left right left right b a"
